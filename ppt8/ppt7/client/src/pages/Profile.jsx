@@ -30,6 +30,10 @@ const Profile = () => {
           profilePicture: event.target.result
         }));
       };
+      reader.onerror = () => {
+        console.error('Failed to read file');
+        alert('Failed to read image file. Please try again.');
+      };
       reader.readAsDataURL(file);
     }
   };

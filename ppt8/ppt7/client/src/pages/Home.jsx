@@ -205,18 +205,23 @@ const Home = () => {
     input.type = 'file';
     input.accept = '.pptx,.ppt,.json';
     input.onchange = (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        const newFile = {
-          id: Date.now(),
-          name: file.name,
-          modified: new Date().toISOString(),
-          file: file
-        };
-        const recent = JSON.parse(localStorage.getItem('recentFiles') || '[]');
-        recent.unshift(newFile);
-        localStorage.setItem('recentFiles', JSON.stringify(recent.slice(0, 20)));
-        navigate('/dashboard', { state: { file } });
+      try {
+        const file = e.target.files[0];
+        if (file) {
+          const newFile = {
+            id: Date.now(),
+            name: file.name,
+            modified: new Date().toISOString(),
+            file: file
+          };
+          const recent = JSON.parse(localStorage.getItem('recentFiles') || '[]');
+          recent.unshift(newFile);
+          localStorage.setItem('recentFiles', JSON.stringify(recent.slice(0, 20)));
+          navigate('/dashboard', { state: { file } });
+        }
+      } catch (error) {
+        console.error('Error processing file:', error);
+        alert('Failed to open file. Please try again.');
       }
     };
     input.click();
