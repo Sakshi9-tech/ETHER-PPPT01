@@ -21,9 +21,14 @@ async function saveLocalJSON(data) {
 }
 
 async function readLocalJSON(id) {
-  const file = path.join(LOCAL_IPFS_DIR, `${id}.json`);
-  const raw = await fs.readFile(file, 'utf8');
-  return JSON.parse(raw);
+  try {
+    const file = path.join(LOCAL_IPFS_DIR, `${id}.json`);
+    const raw = await fs.readFile(file, 'utf8');
+    return JSON.parse(raw);
+  } catch (error) {
+    console.error('Error reading local JSON:', error);
+    throw new Error(`Failed to read presentation: ${error.message}`);
+  }
 }
 
 router.post('/save', async (req, res) => {

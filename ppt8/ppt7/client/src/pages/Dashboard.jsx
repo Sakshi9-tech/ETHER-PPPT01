@@ -391,7 +391,8 @@ const Dashboard = () => {
                       className="w-8 h-8 rounded-full object-cover"
                       onError={(e) => {
                         e.target.style.display = 'none';
-                        e.target.nextSibling.style.display = 'flex';
+                        const next = e.target.nextElementSibling;
+                        if (next) next.style.display = 'flex';
                       }}
                     />
                   ) : null}
@@ -421,7 +422,8 @@ const Dashboard = () => {
                       className="w-12 h-12 rounded-full object-cover"
                       onError={(e) => {
                         e.target.style.display = 'none';
-                        e.target.nextSibling.style.display = 'flex';
+                        const next = e.target.nextElementSibling;
+                        if (next) next.style.display = 'flex';
                       }}
                     />
                   ) : null}
@@ -1298,8 +1300,13 @@ const Dashboard = () => {
                   </button>
                   <button onClick={() => {
                     if (confirm('Start rehearse timings?')) {
+                      if (slides.length === 0) {
+                        alert('No slides to rehearse');
+                        return;
+                      }
                       const timings = slides.map((_, i) => ({ slide: i + 1, duration: Math.floor(Math.random() * 30) + 10 }));
-                      alert(`Rehearse complete! Average time per slide: ${Math.round(timings.reduce((a, b) => a + b.duration, 0) / timings.length)}s`);
+                      const avgTime = Math.round(timings.reduce((a, b) => a + b.duration, 0) / timings.length);
+                      alert(`Rehearse complete! Average time per slide: ${avgTime}s`);
                     }
                   }} className="flex flex-col items-center p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded text-xs">
                     <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>

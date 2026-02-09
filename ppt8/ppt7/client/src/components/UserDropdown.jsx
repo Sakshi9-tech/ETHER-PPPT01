@@ -84,7 +84,8 @@ const UserDropdown = () => {
               className="w-full h-full object-cover"
               onError={(e) => {
                 e.target.style.display = 'none';
-                e.target.nextSibling.style.display = 'flex';
+                const next = e.target.nextElementSibling;
+                if (next) next.style.display = 'flex';
               }}
             />
           ) : null}
@@ -111,7 +112,8 @@ const UserDropdown = () => {
                     className="w-full h-full object-cover"
                     onError={(e) => {
                       e.target.style.display = 'none';
-                      e.target.nextSibling.style.display = 'flex';
+                      const next = e.target.nextElementSibling;
+                      if (next) next.style.display = 'flex';
                     }}
                   />
                 ) : null}
